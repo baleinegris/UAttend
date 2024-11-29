@@ -4,12 +4,23 @@ import { useParams } from 'react-router-dom';
 
 function App() {
   const [sessionId, setSessionId] = useState(useParams().sessionId);
+  const buttonStyle = {
+    padding: '10px',
+    backgroundColor: 'white',
+    color: 'black',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+  }
 
   return (
     <div>
       <h1>UAttend</h1>
-      <Link to="/prof">Professor View</Link>
-      <Link to={`/student/${sessionId}`}>Student View</Link>
+      <h2>Select Role:</h2>
+      <div style={{display: 'flex', gap: '10px'}}>
+        <Link style={buttonStyle} to="/prof">Professor</Link>
+        <Link style={buttonStyle} to={`/student/${sessionId}`}>Student</Link>
+      </div>
     </div>
   );
   
