@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useAuthenticator } from '@aws-amplify/ui-react';
-import  createUser from "../../amplify/create-user/resource";
 
 const StudentView = () => {
   const { user, signOut } = useAuthenticator();
@@ -32,16 +31,10 @@ const StudentView = () => {
     console.log(username)
   }
 
-  function test() {
-    let test = createUser;
-    console.log(test);
-  }
-
   return (
     <main>
       <h1>{user?.signInDetails?.loginId}'s todos</h1>
       <button onClick={submitAttendance}>Confirm Attendance</button>
-      <button onClick={test}>Test</button>
       {userLocation && (
       <div>
           <h2>User Location</h2>

@@ -1,18 +1,21 @@
 import React, { useState } from 'react'
 import QRCode from "react-qr-code";
+import { useAuthenticator } from '@aws-amplify/ui-react';
 
 
 export default function ProfView() {
     const [attendanceCode, setAttendanceCode] = React.useState('')
     const [attendanceLaunched, setAttendanceLaunched] = React.useState(false)
     const [userLocation, setUserLocation]: any= useState(null);
+    const { user, signOut } = useAuthenticator();
+    const username = user?.signInDetails?.loginId;
 
     const getUserLocation = () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
             const { latitude, longitude } = position.coords;
-            setUserLocation({ latitude, longitude });
+            setUserLocation([latitude, longitude]);
               // what to do once we have the position
           },
           (error) => {
@@ -30,16 +33,17 @@ export default function ProfView() {
     async function launchAttendance() {
         await getUserLocation();
         // Ping API endpoint to launch attendance
-        // let response = await fetch('https://api.example.com/launch-attendance', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({ launch: true, location: userLocation })
-        // })
-        // let data = await response.json()
-        let data = {callback: 'google.com'}
-        let callback = data.callback
+        let response = await fetch('https://mun4ipbqa6.execute-api.us-west-2.amazonaws.com/default/create-session', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ profemail: username, lat: userLocation[0], lon: userLocation[1] })
+        })
+        let data = await response.json()
+        console.log(data)
+        let sessionId = data.sessionId
+        let callback = `https://main.d2yz6k2q974qc4.amplifyapp.com/student/${sessionId}`
         setAttendanceCode(callback)
         setAttendanceLaunched(true)
     }
