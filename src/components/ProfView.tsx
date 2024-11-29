@@ -33,7 +33,7 @@ export default function ProfView() {
     async function launchAttendance() {
         await getUserLocation();
         // Ping API endpoint to launch attendance
-        let response = await fetch('https://mun4ipbqa6.execute-api.us-west-2.amazonaws.com/default/create-session', {
+        let response = await fetch('https://h3acu6uy05.execute-api.us-west-2.amazonaws.com/default/create-session', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
