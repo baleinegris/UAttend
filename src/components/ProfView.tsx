@@ -1,4 +1,3 @@
-import { get } from 'aws-amplify/api';
 import React, { useState } from 'react'
 import QRCode from "react-qr-code";
 
@@ -6,7 +5,7 @@ import QRCode from "react-qr-code";
 export default function ProfView() {
     const [attendanceCode, setAttendanceCode] = React.useState('')
     const [attendanceLaunched, setAttendanceLaunched] = React.useState(false)
-    const [userLocation, setUserLocation] = useState(null);
+    const [userLocation, setUserLocation]: any= useState(null);
 
     const getUserLocation = () => {
       if (navigator.geolocation) {

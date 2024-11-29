@@ -1,14 +1,9 @@
-import { useEffect, useState } from "react";
-import type { Schema } from "../../amplify/data/resource";
-import { generateClient } from "aws-amplify/data";
+import { useState } from "react";
 import { useAuthenticator } from '@aws-amplify/ui-react';
 
-const client = generateClient<Schema>();
-
 const StudentView = () => {
-  const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
   const { user, signOut } = useAuthenticator();
-  const [userLocation, setUserLocation] = useState(null);
+  const [userLocation, setUserLocation]: any = useState(null);
 
   const getUserLocation = () => {
     if (navigator.geolocation) {
@@ -29,20 +24,6 @@ const StudentView = () => {
       console.log('Geolocation is not supported by this browser.');
   }
   };
-
-  useEffect(() => {
-    client.models.Todo.observeQuery().subscribe({
-      next: (data) => setTodos([...data.items]),
-    });
-  }, []);
-
-  function createTodo() {
-    client.models.Todo.create({ content: window.prompt("Todo content") });
-  }
-  
-  function deleteTodo(id: string) {
-    client.models.Todo.delete({ id })
-  }
 
   function submitAttendance() {
     getUserLocation();
