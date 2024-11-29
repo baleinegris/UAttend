@@ -25,10 +25,16 @@ const StudentView = () => {
   }
   };
 
-  function submitAttendance() {
+  async function submitAttendance() {
     getUserLocation();
     const username = user?.signInDetails?.loginId;
+    console.log(JSON.stringify({ profemail: username, lat: userLocation[0], lon: userLocation[1] }))
     console.log(username)
+    let response = await fetch('https://ujmvxe9p7k.execute-api.us-west-2.amazonaws.com/default/check-in', {
+        method: 'POST',
+        body: JSON.stringify({ profemail: username, lat: userLocation[0], lon: userLocation[1] })
+    })
+    let data = await response.json()
   }
 
   return (

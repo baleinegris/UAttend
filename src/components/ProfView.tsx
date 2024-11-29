@@ -37,6 +37,7 @@ export default function ProfView() {
             method: 'POST',
             body: JSON.stringify({ profemail: username, lat: userLocation[0], lon: userLocation[1] })
         })
+        console.log(JSON.stringify({ profemail: username, lat: userLocation[0], lon: userLocation[1] }))
         let data = await response.json()
         console.log(data)
         let sessionId = data.sessionId
